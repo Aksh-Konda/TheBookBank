@@ -1,0 +1,40 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport [ngClass]="{'hidden': !(isHandset$ | async)}"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="(isHandset$ | async) === false">
+    <mat-toolbar>Menu</mat-toolbar>
+    <mat-nav-list *ngIf="logedin">
+      <a mat-list-item href="#" routerLinkActive="mat-accent">Add User</a>
+      <a mat-list-item [routerLink]="['/history']" routerLinkActive="active">History</a>
+      <a mat-list-item href="#" routerLinkActive="mat-accent">Requests</a>
+      <a mat-list-item onclick="logout()">
+        <mat-icon aria-label="Logout">logout</mat-icon>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
+        *ngIf="(isHandset$ | async) && logedin">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <a [routerLink]="['/home']">
+        <mat-icon aria-hidden="false" aria-label="Logo">book</mat-icon>The Book Bank
+      </a>
+      <div class="spacer"></div>
+      <div class="menu" *ngIf="!(isHandset$ | async) && logedin">
+        <a mat-button href="#" routerLinkActive="mat-accent">Add User</a>
+        <a mat-button [routerLink]="['/history']" routerLinkActive="active">History</a>
+        <a mat-button href="#" routerLinkActive="mat-accent">Requests</a>
+        <a mat-button mat-icon-button [routerLink]="['/login']">
+          <mat-icon aria-label="Logout">logout</mat-icon>
+        </a>
+      </div>
+    </mat-toolbar>
+    <div class="main">
+      <router-outlet></router-outlet>
+    </div>
+    <app-footer></app-footer>
+    <!-- Add Content Here -->
+  </mat-sidenav-content>
+</mat-sidenav-container>
